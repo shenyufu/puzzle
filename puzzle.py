@@ -1,30 +1,7 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import copy
-
-puzzle_size = (6, 6)
-brick_size = (2, 2)
-
-puzzle_table = (
-    ('#', '#', '-', '-', '-', '-'),
-    ('#', '-', '-', '-', '-', '#'),
-    ('#', '-', '-', '-', '-', '#'),
-    ('#', '-', '-', '-', '-', '#'),
-    ('-', '-', '-', '-', '-', '-'),
-    ('#', '#', '-', '-', '#', '#'),
-)
-bricks = (
-    (('R', 'R'), ('-', '-')),
-    (('R', 'R'), ('-', '-')),
-    (('R', 'R'), ('R', 'R')),
-    (('R', '-'), ('R', 'R')),
-    (('B', 'B'), ('-', '-')),
-    (('-', 'B'), ('B', 'B')),
-    (('Y', '-'), ('Y', 'Y')),
-    (('Y', 'Y'), ('Y', 'Y')),
-    (('Y', '-'), ('-', '-')),
-)
+from table import table_size, brick_size, tables, bricks
 
 
 def print_puzzle(table):
@@ -81,6 +58,7 @@ def place_brick(bricks, puzzle, puzzle_size, brick_num):
                 if len(bricks) == 0:
                     return puzzle1
                 else:
+                    print 'bricks:%s y:%s x:%s' % (brick_num, start_y, start_x)
                     result = place_brick(bricks, puzzle1, puzzle_size, brick_num + 1)
                     if result is not None:
                         return result
@@ -89,22 +67,29 @@ def place_brick(bricks, puzzle, puzzle_size, brick_num):
 
 
 if __name__ == '__main__':
-    puzzle = []
-    for y in range(puzzle_size[1] + brick_size[1] - 1):
-        row = []
-        for x in range(puzzle_size[0] + brick_size[0] - 1):
-            if x < puzzle_size[0] and y < puzzle_size[1]:
-                if puzzle_table[y][x] == '#':
-                    row.append([-1, '#'])
+    i = raw_input('Choose puzzle number:')
+
+    if i not in tables and i not in bricks:
+        print "Can't find puzzle %s !" % i
+    else:
+        puzzle_table = tables[i]
+        puzzle_brick = bricks[i]
+        puzzle = []
+        for y in range(table_size[1] + brick_size[1] - 1):
+            row = []
+            for x in range(table_size[0] + brick_size[0] - 1):
+                if x < table_size[0] and y < table_size[1]:
+                    if puzzle_table[y][x] == '#':
+                        row.append([-1, '#'])
+                    else:
+                        row.append([-1, '-'])
                 else:
-                    row.append([-1, '-'])
-            else:
-                row.append([0, '#'])
-        puzzle.append(row)
+                    row.append([0, '#'])
+            puzzle.append(row)
 
-    print_puzzle(puzzle)
+        print_puzzle(puzzle)
 
-    result = place_brick(bricks, puzzle, puzzle_size, 0)
-    print_puzzle(result)
+        result = place_brick(puzzle_brick, puzzle, table_size, 0)
+        print_puzzle(result)
 
     print 'END'
