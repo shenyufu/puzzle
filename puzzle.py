@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import copy
+import datetime
 from table import table_size, brick_size, tables, bricks
 
 
@@ -72,6 +73,8 @@ if __name__ == '__main__':
     if i not in tables and i not in bricks:
         print "Can't find puzzle %s !" % i
     else:
+        start = datetime.datetime.now()
+
         puzzle_table = tables[i]
         puzzle_brick = bricks[i]
         puzzle = []
@@ -92,4 +95,6 @@ if __name__ == '__main__':
         result = place_brick(puzzle_brick, puzzle, table_size, 0)
         print_puzzle(result)
 
-    print 'END'
+        print 'Time cost: ', datetime.datetime.now() - start
+
+    print '===== END ====='
