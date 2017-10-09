@@ -92,7 +92,7 @@ if __name__ == '__main__':
             puzzle.append(row)
 
         print_puzzle(puzzle, i)
-        print "Total bricks %s" % len(puzzle_brick)
+        print "Total bricks %s pcs" % len(puzzle_brick)
 
         result = place_brick(puzzle_brick, puzzle, table_size, 0)
         print_puzzle(result, i)
