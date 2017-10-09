@@ -5,8 +5,8 @@ import datetime
 from table import table_size, brick_size, tables, bricks
 
 
-def print_puzzle(table):
-    print '== PUZZLE TABLE =='
+def print_puzzle(table, no):
+    print '== PUZZLE TABLE %s ==' % no
     for row in table:
         string = ''
         for bit in row:
@@ -59,7 +59,8 @@ def place_brick(bricks, puzzle, puzzle_size, brick_num):
                 if len(bricks) == 0:
                     return puzzle1
                 else:
-                    print 'bricks:%s y:%s x:%s' % (brick_num, start_y, start_x)
+                    if brick_num == 0 or len(bricks) > 8:
+                        print 'bricks:%s y:%s x:%s' % (brick_num, start_y, start_x), datetime.datetime.now()
                     result = place_brick(bricks, puzzle1, puzzle_size, brick_num + 1)
                     if result is not None:
                         return result
@@ -90,10 +91,11 @@ if __name__ == '__main__':
                     row.append([0, '#'])
             puzzle.append(row)
 
-        print_puzzle(puzzle)
+        print_puzzle(puzzle, i)
+        print "Total bricks %s" % len(puzzle_brick)
 
         result = place_brick(puzzle_brick, puzzle, table_size, 0)
-        print_puzzle(result)
+        print_puzzle(result, i)
 
         print 'Time cost: ', datetime.datetime.now() - start
 
