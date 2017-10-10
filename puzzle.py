@@ -2,7 +2,7 @@
 
 import copy
 import datetime
-from table import table_size, brick_size, tables, bricks
+from table import table_size, brick_size, puzzles
 
 
 def print_puzzle(table, no):
@@ -75,13 +75,13 @@ def place_brick(bricks, puzzle, puzzle_size, brick_num):
 if __name__ == '__main__':
     i = raw_input('Choose puzzle number:')
 
-    if i not in tables and i not in bricks:
+    if i not in puzzles:
         print "Can't find puzzle %s !" % i
     else:
         start = datetime.datetime.now()
 
-        puzzle_table = tables[i]
-        puzzle_brick = bricks[i]
+        puzzle_table = puzzles[i]['tables']
+        puzzle_brick = puzzles[i]['bricks']
         puzzle = []
         for y in range(table_size[1] + brick_size[1] - 1):
             row = []
