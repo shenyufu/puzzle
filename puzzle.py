@@ -41,7 +41,7 @@ def check_puzzle(table):
 
 def place_brick(bricks, puzzle, puzzle_size, brick_num):
     if not bricks:
-        return
+        return puzzle
     brick = bricks[0]
     bricks = bricks[1:]
 
@@ -62,10 +62,14 @@ def place_brick(bricks, puzzle, puzzle_size, brick_num):
                     if brick_num == 0 or len(bricks) > 8:
                         print 'bricks:%s y:%s x:%s' % (brick_num, start_y, start_x), datetime.datetime.now()
                     result = place_brick(bricks, puzzle1, puzzle_size, brick_num + 1)
+                    if result is False:
+                        continue
                     if result is not None:
                         return result
             else:
                 continue
+
+    return False
 
 
 if __name__ == '__main__':
@@ -95,7 +99,10 @@ if __name__ == '__main__':
         print "Total bricks %s pcs" % len(puzzle_brick)
 
         result = place_brick(puzzle_brick, puzzle, table_size, 0)
-        print_puzzle(result, i)
+        if result is False:
+            print "Can't solve puzzle %s" % i
+        else:
+            print_puzzle(result, i)
 
         print 'Time cost: ', datetime.datetime.now() - start
 
